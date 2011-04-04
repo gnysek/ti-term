@@ -1,8 +1,5 @@
 <?php
 
-define('CORE','/app/');
-define('DS',DIRECTORY_SEPARATOR);
-
 class Loader {
 
 	private static $_init = FALSE;
@@ -23,9 +20,9 @@ class Loader {
 
 		$file = str_replace('_', DS, strtolower($class));
 		$files = array(
-			CORE . $file . EXT,
+			APP . $file . EXT,
 		);
-
+		
 		// Przeszukuj
 		foreach ($files as $file) {
 			// Sprawdz czy plik istnieje
