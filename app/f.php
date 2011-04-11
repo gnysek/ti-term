@@ -27,3 +27,9 @@ if (get_magic_quotes_gpc()) {
 	$_COOKIE = undoMagicQuotes($_COOKIE);
 	$_REQUEST = undoMagicQuotes($_REQUEST);
 }
+
+if (!function_exists('trigger_error')) {
+	function trigger_error($text) {
+		die($text);
+	}
+}

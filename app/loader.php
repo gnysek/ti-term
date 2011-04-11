@@ -5,7 +5,8 @@ class Loader {
 	private static $_init = FALSE;
 
 	static function start() {
-		if (self::$_init) return FALSE;
+		if (self::$_init)
+			return FALSE;
 		self::$_init = TRUE;
 		spl_autoload_register(array(__CLASS__, 'autoload'));
 
@@ -20,9 +21,9 @@ class Loader {
 
 		$file = str_replace('_', DS, strtolower($class));
 		$files = array(
-			APP . $file . EXT,
+				APP . $file . EXT,
 		);
-		
+
 		// Przeszukuj
 		foreach ($files as $file) {
 			// Sprawdz czy plik istnieje
@@ -43,7 +44,7 @@ class Loader {
 		}
 
 		// 404, class not found :(
-		trigger_error('Unable to find class "' . $class . '" file');
+		trigger_error('Unable to find class "' . $class . '" file (' . $file . ')');
 
 		return FALSE;
 	}

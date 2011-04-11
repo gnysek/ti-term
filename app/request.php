@@ -3,14 +3,16 @@
 class Request {
 
 	private $_params = array();
+	private $_controller = NULL;
+	private $_requestString = NULL;
 
 	public function __construct() {
 		$this->_params = array_merge($_GET, $_POST);
 	}
 
 	public function __get($name) {
-		if (!empty($this->_params)) {
-			return $this->_params;
+		if (!empty($this->_params[$name])) {
+			return $this->_params[$name];
 		}
 		return NULL;
 	}
@@ -23,8 +25,8 @@ class Request {
 	}
 
 	public function getParam($name) {
-		if (!empty($this->_params)) {
-			return $this->_params;
+		if (!empty($this->_params[$name])) {
+			return $this->_params[$name];
 		}
 		return NULL;
 	}
@@ -41,12 +43,18 @@ class Request {
 	}
 
 	public function getResuestString() {
-		return preg_replace("/[^a-z0-9.,-]/", '', (string) $this->getQuery('r'));
+		if ($this->_requestString === NULL) {
+			$this->_requestString = preg_replace("/[^a-z0-9.,-]/", '', (string) $this->getQuery('r'));
+		}
+		return $this->_requestString;
 	}
-	
+
 	public function getController() {
-		$r = preg_replace('/^([0-9])*/','', (string) $this->getQuery('r'));
-		return preg_replace("/[^a-z0-9]/", '', $r);
+		if ($this->_controller === NULL) {
+			$r = preg_replace('/^([0-9])*/', '', (string) $this->getQuery('r'));
+			$this->_controller = preg_replace("/[^a-z0-9]/", '', $r);
+		}
+		return $this->_controller;
 	}
 
 }

@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL | E_STRICT);
 
 // stałe wykorzystywane przez
 define('DS', DIRECTORY_SEPARATOR);
