@@ -4,22 +4,38 @@ class Core {
 
 	private static $_init = FALSE;
 	private static $_loadedClass = array();
+	/**
+	 * Przetrzymuje referencję na załadowany kontroler
+	 * @var Controller
+	 */
+	private static $_controller = NULL;
 
 	public static function start() {
 		if (self::$_init == FALSE) {
 			// definicja podstawowych ustawien
 			self::$_init = TRUE;
-			self::request();
-			echo self::request()->getController();
-			echo '<br/>';
-			echo self::request()->getResuestString();
+//			self::request();
+//			echo self::request()->getController();
+//			echo '<br/>';
+//			echo self::request()->getResuestString();
+			self::route();
 		}
 	}
 
 	public static function route() {
 		// znajdz kontroler do odpalenia
+		self::request();
 		// zaladuj kontroler
+		$controllerFile = self::request()->getController();
+		if (file_exists(APP . 'controller' . DS . $controllerFile . EXT)) {
+			self::$_controller = self::load('Controller_' . $controllerFile);
+		} else {
+			self::$_controller = self::load('Controller');
+		}
 		// dispatch
+		self::$_controller->_renderHead();
+		self::$_controller->defaultAction();
+		self::$_controller->_renderFooter();
 		// koniec aplikacji
 		self::end();
 	}
