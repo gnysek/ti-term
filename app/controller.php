@@ -19,6 +19,7 @@ class Controller {
 
 	public function defaultAction() {
 		echo 'to jest defaultowa akcja kontrolera';
+		DB::query("SELECT * FROM config;");
 	}
 
 	public function _renderFooter() {

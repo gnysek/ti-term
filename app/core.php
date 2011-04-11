@@ -18,7 +18,9 @@ class Core {
 //			echo self::request()->getController();
 //			echo '<br/>';
 //			echo self::request()->getResuestString();
+			DB::connect();
 			self::route();
+			DB::close();
 		}
 	}
 
