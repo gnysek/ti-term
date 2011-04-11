@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiResourceLocking="false" privileged="true">
+    
+	<Resource
+      name="ttDB"
+      auth="Container"
+      type="javax.sql.DataSource"
+      url="jdbc:h2:~/titag"
+      driverClassName="org.h2.Driver"
+      username="root"
+      password="pass"
+      removeAbandoned="true"
+      removeAbandonedTimeout="300"
+      logAbandoned="true"
+      maxActive="100"
+      maxIdle="20"
+      /> 
+    
+</Context>
