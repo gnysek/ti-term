@@ -6,6 +6,24 @@ body, td, form, input {
 	padding: 0px;
 }
 
+h1,h2,h3,h4,h5,h6 {
+	margin: 0px;
+}
+
+.error{
+	margin: 5px;
+	border: 5px solid red;
+	font-family: monospace;
+	padding: 5px;
+	border-radius: 5px;
+}
+.error h2{
+	font-family: "Arial Narrow", sans-serif;
+	font-size: 20px;
+	letter-spacing: 3px;
+	color: red;
+	font-weight: 800;
+}
 #main {
 	width: 960px;
 	margin: 0px auto;
