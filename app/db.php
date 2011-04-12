@@ -15,7 +15,7 @@ class DB {
 			self::$_conn = new PDO('java:comp/env/ttDB');
 			
 			if (!self::$_conn) {
-				trigger_error('Nie można połączyć z PDO');
+				Error::t('Nie można połączyć z PDO');
 			}
 		}
 	}
@@ -23,9 +23,11 @@ class DB {
 	public static function query($sql) {
 		$result = self::$_conn->query($sql);
 		if (!$result) {
-			trigger_error("Pusta tabela?");
+			Error::t('Pusta tabela?');
+			return NULL;
+		} else {
+			return $result;
 		}
-		return $result;
 	}
 	
 	public static function close() {

@@ -18,12 +18,12 @@ class Controller {
 	}
 
 	public function defaultAction() {
-		echo 'to jest defaultowa akcja kontrolera';
+		$this->view->render('default');
 		DB::query("SELECT * FROM config;");
 	}
 
 	public function _renderFooter() {
-		
+		$this->view->render('footer');
 	}
 
 }
