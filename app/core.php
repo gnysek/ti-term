@@ -29,14 +29,24 @@ class Core {
 		self::request();
 		// zaladuj kontroler
 		$controllerFile = self::request()->getController();
-		if (file_exists(APP . 'controller' . DS . $controllerFile . EXT)) {
-			self::$_controller = self::load('Controller_' . $controllerFile);
+		if (file_exists(APP . 'controller' . DS . strtolower($controllerFile) . EXT)) {
+			include (APP . 'controller' . DS . strtolower($controllerFile) . EXT);
+			self::$_controller = self::load($controllerFile . 'Controller');
 		} else {
 			self::$_controller = self::load('Controller');
 		}
 		// dispatch
 		self::$_controller->_renderHead();
-		self::$_controller->defaultAction();
+		if (DB::connected()) {
+			if (method_exists(self::$_controller, self::request()->getAction())) {
+				$action = self::request()->getAction();
+				self::$_controller->$action;
+			} else {
+				self::$_controller->defaultAction();
+			}
+		} else {
+			Error::t('Błąd sterownika bazy danych. Kontroler nie zostanie wyświetlony');
+		}
 		self::$_controller->_renderFooter();
 		// koniec aplikacji
 		self::end();
@@ -66,7 +76,7 @@ class Core {
 	 * Klasa zajmująca się przetwarzaniem zapytania i tworzeniem URLi
 	 * @return Request
 	 */
-	public function request() {
+	public static function request() {
 		return self::load('Request');
 	}
 

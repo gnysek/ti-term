@@ -4,7 +4,9 @@ class Request {
 
 	private $_params = array();
 	private $_controller = NULL;
+	private $_action = NULL;
 	private $_requestString = NULL;
+	private $_host = 'http://localhost/titag/';
 
 	public function __construct() {
 		$this->_params = array_merge($_GET, $_POST);
@@ -38,8 +40,24 @@ class Request {
 		return NULL;
 	}
 
-	public function getUrl($url) {
-		return $url;
+	public function getHost() {
+		return $this->_host;
+	}
+
+	public function getUrl($action = 'index', $additional = '') {
+		$u = $this->_host . '?r=' . $action;
+
+		if ($additional) {
+			if (is_array($additional)) {
+				foreach ($additional as $k => $v) {
+					$u .= '&' . $k . '=' . $v;
+				}
+			} else {
+				$u .= $additional;
+			}
+		}
+
+		return $u;
 	}
 
 	public function getResuestString() {
@@ -49,10 +67,23 @@ class Request {
 		return $this->_requestString;
 	}
 
+	public function getAction() {
+		if ($this->_controller === NULL) {
+			$this->getController();
+		}
+
+		return $this->_action;
+	}
+
 	public function getController() {
 		if ($this->_controller === NULL) {
 			$r = preg_replace('/^([0-9])*/', '', (string) $this->getQuery('r'));
-			$this->_controller = preg_replace("/[^a-z0-9]/", '', $r);
+			$c = explode('/', $r, 3);
+			$r = preg_replace("/[^a-z0-9]/", '', $c[0]);
+			$this->_controller = $r;
+			if (!empty($c[1])) {
+				$this->_action = preg_replace("/[^a-z0-9]/", '', $c[1]);
+			}
 		}
 		return $this->_controller;
 	}
