@@ -34,6 +34,8 @@
 </div>
 <div class="right-page">
 	Aktualny slajd
+	<hr/>
+	<?php echo $this->render('pp-textarea'); ?>
 </div>
 <div class="clearfix"></div>
 
