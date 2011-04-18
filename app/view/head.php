@@ -14,7 +14,7 @@
 		<ul>
 			<li><a href="<?php echo Core::request()->getUrl('index'); ?>">Strona główna</a></li>
 			<li><a href="<?php echo Core::request()->getUrl('list'); ?>">Lista prezentacji</a></li>
-			<li><a href="<?php echo Core::request()->getUrl('pp',array('a' => 'new')); ?>">Nowa prezentacja</a></li>
+			<li><a href="<?php echo Core::request()->getUrl('pp/create'); ?>">Nowa prezentacja</a></li>
 			<li><a href="<?php echo Core::request()->getUrl('login'); ?>">Logowanie</a></li>
 			<li><a href="<?php echo Core::request()->getUrl('help'); ?>">Pomoc</a></li>
 		</ul>

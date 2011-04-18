@@ -36,18 +36,21 @@ class Core {
 			self::$_controller = self::load('Controller');
 		}
 		// dispatch
-		self::$_controller->_renderHead();
+//		self::$_controller->_renderHead();
 		if (DB::connected()) {
-			if (method_exists(self::$_controller, self::request()->getAction())) {
-				$action = self::request()->getAction();
-				self::$_controller->$action;
+			$action = strtolower(self::request()->getAction()) . 'Action';
+			if (method_exists(self::$_controller, $action)) {
+				self::$_controller->$action();
 			} else {
 				self::$_controller->defaultAction();
 			}
 		} else {
 			Error::t('Błąd sterownika bazy danych. Kontroler nie zostanie wyświetlony');
 		}
-		self::$_controller->_renderFooter();
+		// wyłącz stopkę dla ajaxu
+		if (!self::request()->isAjax()) {
+			self::$_controller->_renderFooter();
+		}
 		// koniec aplikacji
 		self::end();
 	}

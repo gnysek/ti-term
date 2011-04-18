@@ -60,6 +60,12 @@ class Request {
 		return $u;
 	}
 
+	public function redirect($action = 'index', $additional = '') {
+		$url = $this->getUrl($action, $additional);
+		header('Location: ' . $url);
+		die();
+	}
+
 	public function getResuestString() {
 		if ($this->_requestString === NULL) {
 			$this->_requestString = preg_replace("/[^a-z0-9.,-]/", '', (string) $this->getQuery('r'));
@@ -86,6 +92,11 @@ class Request {
 			}
 		}
 		return $this->_controller;
+	}
+
+	public function isAjax() {
+		return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+		($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'));
 	}
 
 }
