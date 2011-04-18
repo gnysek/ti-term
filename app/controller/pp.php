@@ -23,7 +23,9 @@ class PPController extends Controller {
 		$result = DB::query("SELECT * FROM pp WHERE id = $id;");
 		$data = $result->get(0);
 
-		$this->view->render('pp-edit', array('data' => $data));
+		$slajdy = DB::query("SELECT * FROM slides WHERE pp_id = $id ORDER BY id ASC;");
+
+		$this->view->render('pp-edit', array('data' => $data, 'slajdy' => $slajdy));
 	}
 
 	public function slideAction() {
@@ -35,7 +37,22 @@ class PPController extends Controller {
 
 		if ($this->request->isAjax()) {
 			$this->ajax = TRUE;
-			$this->ajaxRender('pp-left-slide', array('data' => $result));
+			$this->view->ajaxRender('pp-left-slide', array('slajdy' => $result, 'id' => $id));
+		} else {
+			$this->request->redirect('pp/edit', array('id' => $id));
+		}
+	}
+
+	public function delslideAction() {
+		$id = (int) $this->request->getParam('id');
+		$slid = (int) $this->request->getParam('slid');
+
+		DB::query("DELETE FROM slides WHERE id = $slid;");
+
+		if ($this->request->isAjax()) {
+			$result = DB::query("SELECT * FROM slides WHERE pp_id = $id ORDER BY id ASC;");
+			$this->ajax = TRUE;
+			$this->view->ajaxRender('pp-left-slide', array('slajdy' => $result, 'id' => $id));
 		} else {
 			$this->request->redirect('pp/edit', array('id' => $id));
 		}

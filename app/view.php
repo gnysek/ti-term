@@ -8,8 +8,8 @@ class View {
 		$inc = APP . 'view' . DS . strtolower(str_replace('_', DS, $file)) . EXT;
 		if (file_exists($inc)) {
 			if (is_array($data)) {
-				foreach ($data as $k => $v) {
-					$$k = $v;
+				foreach ($data as $___k => $___v) {
+					$$___k = $___v;
 				}
 			}
 			include $inc;
