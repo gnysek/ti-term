@@ -1,21 +1,115 @@
 body, td, form, input {
 	font-family: Verdana;
 	font-size: 11px;
+}
+
+body{
 	background-color: #f5f5f5;
 	margin: 0px;
 	padding: 0px;
 }
 
+input{
+	margin: 4px 1px;
+	font-size: 20px;
+	padding: 4px;
+	border: 1px solid silver;
+	border-radius: 3px;
+	color: darkgray;
+}
+input:hover{
+	border-color: darkgray;
+	color: gray;
+}
+input:focus{
+	border-color: black;
+	color: black;
+}
+input[type=submit]{
+	color: #333;
+	text-shadow: 1px 1px 0px white;
+	background-color: gold;
+}
+input[type=submit]:hover{
+	color: black;
+	border-color: orange;
+}
+.input-half{width: 50%;}
+
 h1,h2,h3,h4,h5,h6 {
 	margin: 0px;
+}
+h1{
+	font-weight: normal;
+	border-left: 20px solid darkcyan;
+	padding: 0 0 3px 5px;
+	margin: 5px 5px 2px 0px;
+	font-family: 'Myriad Pro';
+}
+
+a,a:visited {
+	color: darkcyan;
+	text-decoration: none;
+}
+
+a:hover{color: tomato;}
+
+.menu ul{
+	list-style: none;
+	margin: 0 5px;
+	padding: 0;
+}
+
+.menu ul li{
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+.menu a,.menu a:visited{
+	padding: 5px;
+	display: block;
+	border: 1px solid silver;
+	border-radius: 4px;
+	margin-right: 5px;
+}
+.menu a:hover{
+	background-color: darkcyan;
+	color: white;
+	border-color: black;
+}
+
+.left-column{
+	width: 200px;
+	margin-right: 9px;
+	float: left;
+	border-right: 1px solid silver;
+}
+.right-page{
+	width: 750px;
+	float: right;
+}
+
+.clearfix{
+	clear: both;
+}
+
+.stopka {
+	text-align: center;
+	font-size: 10px;
+	padding: 5px;
+	margin: 5px 20px 0 20px;
+	border-top: 1px solid silver;
 }
 
 .error{
 	margin: 5px;
 	border: 5px solid red;
-	font-family: monospace;
+	font-family: "Lucida Console", "Courier New", monospace;
 	padding: 5px;
 	border-radius: 5px;
+	background-color: bisque;
+	font-size: 17px;
 }
 .error h2{
 	font-family: "Arial Narrow", sans-serif;
