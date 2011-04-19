@@ -14,6 +14,7 @@ class Session {
 			$result = DB::query("SELECT * FROM sessions ORDER BY last_time");
 		} else {
 			// utwórz nową sesję
+			$key = md5(uniqid(mt_rand(), true));
 		}
 	}
 
