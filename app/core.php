@@ -82,5 +82,13 @@ class Core {
 	public static function request() {
 		return self::load('Request');
 	}
+	
+	/**
+	 *
+	 * @return Cookie
+	 */
+	public static function cookie() {
+		return self::load('Cookie');
+	}
 
 }
