@@ -31,6 +31,13 @@ class DB {
 		return (bool) self::$_conn;
 	}
 
+	/**
+	 *
+	 * @param type $sql
+	 * @param type $skip
+	 * @param type $assoc
+	 * @return Collection 
+	 */
 	public static function query($sql, $skip = '', $assoc = TRUE) {
 		$result = self::$_conn->query($sql);
 		if (!$result) {

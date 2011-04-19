@@ -35,7 +35,7 @@
 <div class="right-page">
 	Aktualny slajd
 	<hr/>
-	<?php echo $this->render('pp-textarea'); ?>
+	<?php echo $this->render('pp-textarea', array('obecny' => $slajdy->get(0))); ?>
 </div>
 <div class="clearfix"></div>
 
