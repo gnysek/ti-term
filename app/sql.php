@@ -22,6 +22,7 @@ class Sql {
 	private $_finalSql = '';
 	private $_count = NULL;
 	private $_collection = NULL;
+	private $_size = 0;
 
 	/**
 	 * Przygotowuje string z SQLem
@@ -54,7 +55,7 @@ class Sql {
 			case self::TYPE_UPDATE:
 				$col = explode(',', $this->_columns);
 				$val = explode(',', $this->_values);
-				
+
 				if (empty($this->_where) or count($col) != count($val)) {
 					trigger_error('Błąd update - brakuje where, lub liczba kolumn i wartosci sie nie zgadza');
 				}
@@ -113,7 +114,7 @@ class Sql {
 		if (!is_array($values)) {
 			$values = array($values);
 		}
-		
+
 		$sql = array();
 		foreach ($values as $v) {
 			if ($v === NULL) {
@@ -157,6 +158,7 @@ class Sql {
 			$this->_prepareSql();
 
 			$this->_collection = DB::query($this->_finalSql);
+			$this->_size = $this->_collection->count();
 		}
 
 		return $this->_collection;
@@ -179,10 +181,10 @@ class Sql {
 
 	/**
 	 * zwraca ilosc pobranych rekordów
-	 * @return Sql 
+	 * @return int
 	 */
 	public function size() {
-		return $this;
+		return $this->_size;
 	}
 
 	/**

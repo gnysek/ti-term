@@ -3,6 +3,29 @@
 class View {
 
 	private $_upRenreded = FALSE;
+	/**
+	 * @var Request
+	 */
+	public $request = FALSE;
+	/**
+	 * @var Session
+	 */
+	public $session = FALSE;
+	public $js = array();
+	public $css = array();
+
+	public function __construct() {
+		$this->request = Core::request();
+		$this->session = Core::session();
+	}
+
+	public function addCss($css) {
+		$this->css[] = $css;
+	}
+
+	public function addJs($js) {
+		$this->js[] = $js;
+	}
 
 	public function _render($file, array $data = array()) {
 		$inc = APP . 'view' . DS . strtolower(str_replace('_', DS, $file)) . EXT;

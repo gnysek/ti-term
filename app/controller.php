@@ -39,5 +39,10 @@ class Controller {
 			return;
 		$this->view->render('footer');
 	}
+	
+	public function accessDenied() {
+//		$this->view->render('login-form');
+		$this->request->redirect('login');
+	}
 
 }
