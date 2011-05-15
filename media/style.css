@@ -130,3 +130,64 @@ a:focus { outline:none; }
 	background-color: white;
 	padding: 5px 0px;
 }
+
+/* CUSTOMOWE TABY */
+div.custom-tabs {
+    border-bottom: 1px solid #999999;
+    height: 26px;
+    padding-left: 10px;
+}
+ul.custom-tabs {
+    border-bottom: 1px solid #999999;
+    border-left: 1px solid #999999;
+    border-radius: 5px 0 0 0;
+    float: left;
+    height: 26px;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+ul.custom-tabs li {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #F7F8F8;
+    border-color: #999999 #999999 #999999 -moz-use-text-color;
+    border-style: solid solid solid none;
+    border-width: 1px 1px 1px medium;
+    float: left;
+    height: 25px;
+    line-height: 24px;
+    margin: 0 0 -1px;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+}
+ul.custom-tabs li:first-child, ul.custom-tabs li:first-child a {
+    border-top-left-radius: 5px;
+}
+ul.custom-tabs li:last-child, ul.custom-tabs li:last-child a {
+    border-top-right-radius: 5px;
+}
+ul.custom-tabs li a {
+    border: 1px solid white;
+    color: #888888;
+    display: block;
+    outline: medium none;
+    padding: 0 10px;
+    text-decoration: none;
+}
+ul.custom-tabs li a:hover {
+    background: none repeat scroll 0 0 #E8F5F6;
+    color: #444444;
+}
+html ul.custom-tabs li.active, html ul.custom-tabs li.active a:hover {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+html ul.custom-tabs li.active a {
+    color: black;
+}
