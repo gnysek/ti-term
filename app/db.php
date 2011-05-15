@@ -67,6 +67,16 @@ class DB {
 		}
 	}
 
+	public static function update($sql) {
+		$result = self::$_conn->exec($sql);
+		if ($result === FALSE) {
+			Error::t('Błąd zapytania<br/>' . $sql . '<br/>' . var_export(self::$_conn->errorInfo(), true));
+			return NULL;
+		} else {
+			return $result;
+		}
+	}
+
 	public static function lastId() {
 		return self::$_conn->lastInsertId();
 	}

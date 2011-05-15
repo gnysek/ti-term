@@ -34,9 +34,10 @@ class Cookie {
 			if (!empty($cfg['key']))
 				$this->salt = $cfg['key'];
 		} else {
-			$this->domain = HMT::cfg()->cookie_domain;
-			$this->path = HMT::cfg()->cookie_path;
-			$this->salt = HMT::cfg()->cookie_key;
+//			$this->domain = HMT::cfg()->cookie_domain;
+			$this->path = '/titag';
+//			$this->salt = HMT::cfg()->cookie_key;
+			$this->domain = 'localhost';
 		}
 	}
 
@@ -51,7 +52,7 @@ class Cookie {
 	 */
 	public function set($name, $value, $expire = 0, $secure = FALSE, $httponly = FALSE) {
 //		setcookie($name, $this->salt($name, $value) . '#' . $value, time() + $expire, $this->path, $this->domain, $secure, $httponly);
-		setcookie($name, base64_encode($this->salt($name, $value) . '#' . $value), time() + $expire, $this->path, $this->domain, $secure, $httponly);
+		setcookie($name, base64_encode($this->salt($name, $value) . '#' . $value), ($expire === 0) ? 0 : time() + $expire, $this->path, $this->domain, $secure, $httponly);
 		return TRUE;
 	}
 
@@ -62,7 +63,7 @@ class Cookie {
 	 * @return	boolean
 	 */
 	public function get($name, $defValue = NULL) {
-		if (!empty($_COOKIE[$name]) && strstr($_COOKIE[$name], '#')) {
+		if (!empty($_COOKIE[$name]) && strstr(base64_decode($_COOKIE[$name]), '#')) {
 //			list($oldSalt, $value) = explode('#', $_COOKIE[$name], 2);
 			list($oldSalt, $value) = explode('#', base64_decode($_COOKIE[$name]), 2);
 			return ($oldSalt === $this->salt($name, $value)) ? $value : $defValue;

@@ -19,6 +19,7 @@ class Core {
 //			echo '<br/>';
 //			echo self::request()->getResuestString();
 			DB::connect();
+			self::session();
 			self::route();
 			DB::close();
 		}
@@ -82,13 +83,21 @@ class Core {
 	public static function request() {
 		return self::load('Request');
 	}
-	
+
 	/**
 	 *
 	 * @return Cookie
 	 */
 	public static function cookie() {
 		return self::load('Cookie');
+	}
+
+	/**
+	 *
+	 * @return Session
+	 */
+	public static function session() {
+		return self::load('Session');
 	}
 
 }

@@ -15,7 +15,11 @@
 			<li><a href="<?php echo Core::request()->getUrl('index'); ?>">Strona główna</a></li>
 			<li><a href="<?php echo Core::request()->getUrl('list'); ?>">Lista prezentacji</a></li>
 			<li><a href="<?php echo Core::request()->getUrl('pp/create'); ?>">Nowa prezentacja</a></li>
+			<?php if (Core::session()->logged == false): ?>
 			<li><a href="<?php echo Core::request()->getUrl('login'); ?>">Logowanie</a></li>
+			<?php else: ?>
+			<li><a href="<?php echo Core::request()->getUrl('login/logout'); ?>">Wyloguj (<?php echo Core::session()->userData->name; ?>)</a></li>
+			<?php endif; ?>
 			<li><a href="<?php echo Core::request()->getUrl('help'); ?>">Pomoc</a></li>
 		</ul>
 	</div>

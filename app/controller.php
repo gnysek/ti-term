@@ -13,10 +13,15 @@ class Controller {
 	 */
 	public $request = NULL;
 	public $ajax = FALSE;
+	/**
+	 * @var Session
+	 */
+	public $session = FALSE;
 
 	public function __construct() {
 		$this->view = Core::load('View');
 		$this->request = Core::request();
+		$this->session = Core::session();
 //		$this->view->controller = $this;
 	}
 
