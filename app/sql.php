@@ -16,6 +16,7 @@ class Sql {
 	private $_group = '';
 	private $_order = '';
 	private $_limit = '';
+	private $_values = '';
 	// bufory
 	private $_sqlPrepared = FALSE;
 	private $_finalSql = '';
@@ -31,8 +32,8 @@ class Sql {
 			return $this;
 
 		switch ($this->_type) {
-			case SELECT:
-				$this->_finalSql .= 'SELECT ' . ((empty($this->_columns)) ? '*' : $this->_columns)
+			case self::TYPE_SELECT:
+				$this->_finalSql = 'SELECT ' . ((empty($this->_columns)) ? '*' : $this->_columns)
 					. ' FROM ' . $this->_from;
 				if (!empty($this->_where))
 					$this->_finalSql .= ' WHERE ' . $this->_where;
@@ -43,8 +44,38 @@ class Sql {
 				if (!empty($this->_limit))
 					$this->_finalSql .= ' LIMIT ' . $this->_limit;
 				$this->_finalSql .= ';';
+				break;
+			case self::TYPE_INSERT:
+				$this->_finalSql = 'INSERT INTO ' . ($this->_from);
+				$this->_finalSql .= ( (empty($this->_columns)) ? '' : '(' . $this->_columns . ') ');
+				$this->_finalSql .= 'VALUES (' . $this->_values . ')';
+				$this->_finalSql .= ';';
+				break;
+			case self::TYPE_UPDATE:
+				$col = explode(',', $this->_columns);
+				$val = explode(',', $this->_values);
+				
+				if (empty($this->_where) or count($col) != count($val)) {
+					trigger_error('Błąd update - brakuje where, lub liczba kolumn i wartosci sie nie zgadza');
+				}
+
+				$set = array();
+				for ($i = 0; $i < count($col); $i++) {
+					$set[] = $col[$i] . ' = ' . $val[$i];
+				}
+
+				$this->_finalSql = 'UPDATE ' . ($this->_from);
+				$this->_finalSql .= ' SET ' . implode(', ', $set) . '';
+				$this->_finalSql .= ' WHERE ' . $this->_where;
+				$this->_finalSql .= ';';
+				break;
 		}
 
+		return $this;
+	}
+
+	public function insert() {
+		$this->_type = self::TYPE_INSERT;
 		return $this;
 	}
 
@@ -54,10 +85,11 @@ class Sql {
 		} else {
 			$this->_columns = $columns;
 		}
+		return $this;
 	}
 
 	public function from($from) {
-		if (is_array($select)) {
+		if (is_array($from)) {
 			$this->_from = implode(', ', $from);
 		} else {
 			$this->_from = $from;
@@ -65,6 +97,56 @@ class Sql {
 		return $this;
 	}
 
+	public function into($into) {
+		$this->insert();
+		return $this->from($from);
+	}
+
+	public function update($where = '') {
+		$this->_type = self::TYPE_UPDATE;
+		if (!empty($where))
+			$this->from($where);
+		return $this;
+	}
+
+	public function values($values) {
+		if (!is_array($values)) {
+			$values = array($values);
+		}
+		
+		$sql = array();
+		foreach ($values as $v) {
+			if ($v === NULL) {
+				$v = 'NULL';
+			} elseif (is_string($v)) {
+				$v = '\'' . DB::protect($v) . '\'';
+			}
+			$sql[] = $v;
+		}
+		$this->_values = implode(', ', $sql);
+		return $this;
+	}
+
+	public function where($where) {
+		if (func_num_args() > 1) {
+			for ($i = 1; $i < func_num_args(); $i++) {
+				$var = func_get_arg($i);
+				if ($var === NULL) {
+					$var = 'NULL';
+				} elseif (is_string($var)) {
+					$var = '\'' . DB::protect($var) . '\'';
+				}
+				$where = preg_replace('/\?/i', $var, $where, 1);
+			}
+		}
+		$this->_where .= $where . ' ';
+		return $this;
+	}
+
+	/**
+	 *
+	 * @return Collection
+	 */
 	public function load() {
 		if ($this->_collection === NULL) {
 			// jeśli nie wiadomo skąd pobieramy, to jak w ogóle cokolwiek pobrać ;)
@@ -76,8 +158,23 @@ class Sql {
 
 			$this->_collection = DB::query($this->_finalSql);
 		}
-		
+
 		return $this->_collection;
+	}
+
+	public function execute() {
+		if ($this->_collection === NULL) {
+			// jeśli nie wiadomo skąd pobieramy, to jak w ogóle cokolwiek pobrać ;)
+			if (empty($this->_from)) {
+				trigger_error('Nie podano tabeli, nie mozna wykonac zapytania.');
+			}
+
+			$this->_prepareSql();
+
+			$total = DB::update($this->_finalSql);
+		}
+
+		return $total;
 	}
 
 	/**
@@ -101,6 +198,10 @@ class Sql {
 		}
 
 		return $this->_count;
+	}
+
+	public function __toString() {
+		return $this->_finalSql;
 	}
 
 }
