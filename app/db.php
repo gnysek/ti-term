@@ -92,4 +92,11 @@ class DB {
 		return $str;
 	}
 
+	/**
+	 * @return Sql 
+	 */
+	public static function sql() {
+		return new Sql();
+	}
+
 }

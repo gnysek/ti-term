@@ -28,7 +28,7 @@ class PPController extends Controller {
 
 		$id = (int) $this->request->getParam('id');
 		$slid = (int) $this->request->getParam('slid');
-
+		
 		$result = DB::query("SELECT * FROM pp WHERE id = $id;");
 		$data = $result->get(0);
 
