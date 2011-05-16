@@ -30,8 +30,9 @@ class Controller {
 //	}
 
 	public function defaultAction() {
-		$this->view->render('default');
-		DB::query("SELECT * FROM config;");
+		$result = DB::sql()->from('remote')->join('pp', 'remote_pp = id')->load();
+
+		$this->view->render('default', array('result' => $result));
 	}
 
 	public function _renderFooter() {
@@ -39,7 +40,7 @@ class Controller {
 			return;
 		$this->view->render('footer');
 	}
-	
+
 	public function accessDenied() {
 //		$this->view->render('login-form');
 		$this->request->redirect('login');

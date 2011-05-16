@@ -41,7 +41,10 @@ class DB {
 	public static function query($sql, $skip = '', $assoc = TRUE) {
 		$result = self::$_conn->query($sql);
 		if (!$result) {
-			Error::t('Pusta tabela?');
+			if (self::$_conn->errorCode()) {
+				Error::t($sql);
+				Error::t(implode(': ',self::$_conn->errorInfo()));
+			}
 			return NULL;
 		} else {
 			if ($result instanceof PDOStatement) {

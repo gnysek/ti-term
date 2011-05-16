@@ -200,9 +200,9 @@ html ul.custom-tabs li.active a {
 	font-size: 100%;
 }
 
-#slajd-modal-inner {
-	font-size: 1em;
-	color: black;
+#slajd-modal h1 {
+	border: none;
+	font-size: 3em;
 }
 
 #slajd-modal {
@@ -213,10 +213,12 @@ html ul.custom-tabs li.active a {
 	display: block;
 	top: 0px;
 	left: 0px;
-/*	opacity: 0.5;*/
+	font-size: 100%;
+	/*	opacity: 0.5;*/
 }
 
 #slajd-modal-inner{
+	font-size: 1.5em;
 	display: block;
 	background-color: white;
 	margin: 0 auto;
@@ -232,4 +234,14 @@ html ul.custom-tabs li.active a {
 }
 #slajd-modal-controls img {
 	cursor: pointer;
+}
+#slajd-remote-monitor{
+	position: absolute;
+	top: 0px;
+	margin: 10px;
+	z-index: 50;
+}
+
+#slajd-modal-content {
+	padding: 0.5em;
 }
