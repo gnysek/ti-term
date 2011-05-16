@@ -38,6 +38,8 @@ class Sql {
 					. ' FROM ' . $this->_from;
 				if (!empty($this->_where))
 					$this->_finalSql .= ' WHERE ' . $this->_where;
+				if (!empty($this->_join))
+					$this->_finalSql .= ' JOIN ' . $this->_join;
 				if (!empty($this->_group))
 					$this->_finalSql .= ' GROUP BY ' . $this->_group;
 				if (!empty($this->_order))
@@ -100,7 +102,7 @@ class Sql {
 
 	public function into($into) {
 		$this->insert();
-		return $this->from($from);
+		return $this->from($into);
 	}
 
 	public function update($where = '') {
@@ -141,6 +143,11 @@ class Sql {
 			}
 		}
 		$this->_where .= $where . ' ';
+		return $this;
+	}
+
+	public function join($table, $on) {
+		$this->_join = $table . ' ON ' . $on;
 		return $this;
 	}
 
