@@ -26,6 +26,10 @@ class View {
 	public function addJs($js) {
 		$this->js[] = $js;
 	}
+	
+	public function disableHeadRender(){
+		return $this->_upRenreded = TRUE;
+	}
 
 	public function _render($file, array $data = array()) {
 		$inc = APP . 'view' . DS . strtolower(str_replace('_', DS, $file)) . EXT;

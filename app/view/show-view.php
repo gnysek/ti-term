@@ -3,7 +3,7 @@ Lista slajdów:
 <div class="slajdy-div">
 	<?php $i = 0; ?>
 	<?php foreach ($slides as $s): ?>
-		<div id="slide-pp-<?php echo $i++; ?>" class="sub-slajd">
+		<div id="slide-pp-<?php echo $i++; ?>" class="sub-slajd" style="display: none;">
 			<?php echo BBCode::show($s->text); ?>
 		</div>
 	<?php endforeach; ?>
@@ -61,6 +61,8 @@ Lista slajdów:
 			$(this).fadeTo('fast','0.3');
 		});
 		
+		$('#slajd-remote-monitor').fadeTo(1,'0.3');
+		
 		$('#slajd-modal-controls img').hover(function(){
 			var a = $(this).attr('src');
 			if (a.indexOf('blue') < 0) {
@@ -116,8 +118,8 @@ Lista slajdów:
 		</div>
 	<?php endif; ?>
 	<div id="slajd-modal-controls">
+		<img src="media/img/lightbulb.png" onclick="turnLight();"/>
 		<?php if (empty($remoteView)): ?>
-			<img src="media/img/lightbulb.png" onclick="turnLight();"/>
 			<img src="media/img/control_start.png" onclick="showSlide(0);"/>
 			<img src="media/img/control_rewind.png" onclick="showSlide(currentSlide - 1);"/>
 			<img src="media/img/control_fastforward.png" onclick="showSlide(currentSlide + 1);"/>

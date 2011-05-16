@@ -103,6 +103,7 @@
       [/<li>/gi, "[*]"],
       [/<\/li>/gi, "[/*]"],
       [/<font.*?color="(.*?)".*?>([^]+?)<\/font>/gi, "[color=$1]$2[/color]"],
+      [/<span(.*?)>([^]+?)<\/(.*?)>/g, "$2"], //jakies zbłąkane szpany ;)
       [/<(.*?)>([^]+?)<\/(.*?)>/g, "[$1]$2[/$3]"]
       ], function(index, item) {
         html = html.replace(item[0], item[1]);

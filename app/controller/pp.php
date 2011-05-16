@@ -93,7 +93,6 @@ class PPController extends Controller {
 
 		$id = (int) $this->request->getParam('id');
 
-
 		if ($id > 0 && !empty($_POST['slideData'])) {
 			//sprawdź autora
 			$sql = new Sql();
