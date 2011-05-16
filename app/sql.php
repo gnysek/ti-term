@@ -34,7 +34,7 @@ class Sql {
 
 		switch ($this->_type) {
 			case self::TYPE_SELECT:
-				$this->_finalSql = 'SELECT ' . ((empty($this->_columns)) ? '*' : $this->_columns)
+				$this->_finalSql = 'SELECT ' . ((empty($this->_columns)) ? '*' : implode(',', $this->_columns))
 					. ' FROM ' . $this->_from;
 				if (!empty($this->_where))
 					$this->_finalSql .= ' WHERE ' . $this->_where;
@@ -50,16 +50,20 @@ class Sql {
 				break;
 			case self::TYPE_INSERT:
 				$this->_finalSql = 'INSERT INTO ' . ($this->_from);
-				$this->_finalSql .= ( (empty($this->_columns)) ? '' : '(' . $this->_columns . ') ');
-				$this->_finalSql .= 'VALUES (' . $this->_values . ')';
+				$this->_finalSql .= ( (empty($this->_columns)) ? '' : '(' . implode(',', $this->_columns) . ') ');
+				$this->_finalSql .= 'VALUES (' . implode(',', $this->_values) . ')';
 				$this->_finalSql .= ';';
 				break;
 			case self::TYPE_UPDATE:
-				$col = explode(',', $this->_columns);
-				$val = explode(',', $this->_values);
+				$col = $this->_columns;
+				$val = $this->_values;
+				
+				if (empty($this->_where)) {
+					trigger_error('Błąd update - brakuje where');
+				}
 
-				if (empty($this->_where) or count($col) != count($val)) {
-					trigger_error('Błąd update - brakuje where, lub liczba kolumn i wartosci sie nie zgadza');
+				if (count($col) != count($val)) {
+					trigger_error('Błąd update - liczba kolumn i wartosci sie nie zgadza');
 				}
 
 				$set = array();
@@ -84,9 +88,9 @@ class Sql {
 
 	public function columns($columns) {
 		if (is_array($columns)) {
-			$this->_columns = implode(', ', $columns);
+			$this->_columns = $columns;//implode(', ', $columns);
 		} else {
-			$this->_columns = $columns;
+			$this->_columns = array($columns);
 		}
 		return $this;
 	}
@@ -117,16 +121,15 @@ class Sql {
 			$values = array($values);
 		}
 
-		$sql = array();
-		foreach ($values as $v) {
+		foreach ($values as $k => $v) {
 			if ($v === NULL) {
 				$v = 'NULL';
 			} elseif (is_string($v)) {
 				$v = '\'' . DB::protect($v) . '\'';
 			}
-			$sql[] = $v;
+			$values[$k] = $v;
 		}
-		$this->_values = implode(', ', $sql);
+		$this->_values = $values;
 		return $this;
 	}
 
