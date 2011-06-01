@@ -3,9 +3,28 @@
 class PPController extends Controller {
 
 	public function defaultAction() {
-		$data = DB::query("SELECT * FROM pp WHERE;");
+		$data = DB::query("SELECT * FROM pp;");
 
 		$this->view->render('pp-list', array('data' => $data, 'uid' => $this->session->userId));
+	}
+	
+	public function themeAction() {
+		if (!$this->session->logged) {
+			$this->accessDenied();
+		}
+		
+		$id = (int) $this->request->getParam('id');
+		
+		$this->view->render('pp-theme', array('id' => $id));
+	}
+	
+	public function savethemeAction(){
+		$id = (int) $this->request->getParam('id');
+		$theme = (int) $this->request->getParam('theme');
+		
+		DB::update("UPDATE pp SET theme = $theme WHERE id = $id;");
+		
+		$this->request->redirect('list');
 	}
 
 	public function createAction() {
