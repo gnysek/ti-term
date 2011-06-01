@@ -75,8 +75,15 @@ class RemoteController extends Controller {
 		if ($result->count() == 0) {
 			Error::t('Nie ma takiej prezentacji');
 		} else {
+			$result = DB::sql()->from('pp')->where('id = ? ', $id)->load();
+		
+			$theme = $result->get(0)->theme;
+			if (!empty($theme)) {
+				$theme = 'bg' . $theme;
+			}
+			
 			$result = DB::sql()->from('slides')->where('pp_id = ? ', $id)->load();
-			$this->view->render('show-view', array('slides' => $result, 'remoteView' => 'true'));
+			$this->view->render('show-view', array('slides' => $result, 'remoteView' => 'true', 'theme'=>$theme));
 		}
 	}
 

@@ -127,7 +127,11 @@ Lista slajdów:
 		<?php endif; ?>
 		<a href="<?php echo $this->request->getUrl('list'); ?>"><img src="media/img/control_eject.png"/></a>
 	</div>
+	<?php if (!empty($theme)): ?>
+	<div id="slajd-modal-inner" class="<?php echo $theme ?>">
+	<?php else: ?>
 	<div id="slajd-modal-inner">
+	<?php endif; ?>
 		<div id="slajd-modal-content">asdf</div>
 	</div>
 </div>

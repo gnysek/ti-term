@@ -245,3 +245,22 @@ html ul.custom-tabs li.active a {
 #slajd-modal-content {
 	padding: 0.5em;
 }
+
+.bg1,.bg2,.bg3{background-image: url('bg1.jpg'); background-size: 100%;}
+.bg2{background-image: url('bg2.jpg');}
+.bg3{background-image: url('bg3.jpg');}
+
+.theme{
+	width: 100px;
+	height: 100px;
+	display: block;
+	border: 1px solid black;
+	margin: 10px;
+	float: left;
+}
+
+.theme a{
+	width: 100px;
+	height: 100px;
+	display: block;
+}
