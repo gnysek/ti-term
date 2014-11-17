@@ -48,6 +48,8 @@ Lista slajdów:
 			$('#slajd-modal-inner').height(wys);
 			$('#slajd-modal-controls').css('right', ($window.width() - szer + 20) / 2);
 			$('#slajd-remote-monitor').css('right', ($window.width() - szer + 20) / 2 );
+			$('#slajd-modal-inner.bg1').css('padding-left', (szer * 0.12) + 'px');
+			console.log(szer);
 			setFontScale();
 		}
 		

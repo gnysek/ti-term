@@ -1,16 +1,19 @@
 <?php
 
-class Core {
+class Core
+{
 
 	private static $_init = FALSE;
 	private static $_loadedClass = array();
 	/**
 	 * Przetrzymuje referencję na załadowany kontroler
+	 *
 	 * @var Controller
 	 */
 	private static $_controller = NULL;
 
-	public static function start() {
+	public static function start()
+	{
 		if (self::$_init == FALSE) {
 			// definicja podstawowych ustawien
 			self::$_init = TRUE;
@@ -25,13 +28,14 @@ class Core {
 		}
 	}
 
-	public static function route() {
+	public static function route()
+	{
 		// znajdz kontroler do odpalenia
 		self::request();
 		// zaladuj kontroler
 		$controllerFile = self::request()->getController();
 		if (file_exists(APP . 'controller' . DS . strtolower($controllerFile) . EXT)) {
-			include (APP . 'controller' . DS . strtolower($controllerFile) . EXT);
+			include(APP . 'controller' . DS . strtolower($controllerFile) . EXT);
 			self::$_controller = self::load($controllerFile . 'Controller');
 		} else {
 			self::$_controller = self::load('Controller');
@@ -56,20 +60,25 @@ class Core {
 		self::end();
 	}
 
-	public static function stop() {
+	public static function stop()
+	{
 		//przerywa działanie (krytyczne)
 	}
 
-	public static function end() {
+	public static function end()
+	{
 		// konczy dzialanie
 	}
 
 	/**
 	 * Wczytuje klasę do rejestru
+	 *
 	 * @param string $class
-	 * @return mixed 
+	 *
+	 * @return mixed
 	 */
-	public static function load($class) {
+	public static function load($class)
+	{
 		if (!array_key_exists(($class), self::$_loadedClass)) {
 			self::$_loadedClass[$class] = new $class();
 		}
@@ -78,9 +87,11 @@ class Core {
 
 	/**
 	 * Klasa zajmująca się przetwarzaniem zapytania i tworzeniem URLi
+	 *
 	 * @return Request
 	 */
-	public static function request() {
+	public static function request()
+	{
 		return self::load('Request');
 	}
 
@@ -88,7 +99,8 @@ class Core {
 	 *
 	 * @return Cookie
 	 */
-	public static function cookie() {
+	public static function cookie()
+	{
 		return self::load('Cookie');
 	}
 
@@ -96,7 +108,8 @@ class Core {
 	 *
 	 * @return Session
 	 */
-	public static function session() {
+	public static function session()
+	{
 		return self::load('Session');
 	}
 

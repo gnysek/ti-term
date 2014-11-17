@@ -18,6 +18,13 @@ class RemoteController extends Controller {
 		$this->request->redirect('remote/manage', array('id' => $id));
 	}
 
+	public function deleteAction() {
+		$id = (int) $this->request->getParam('id');
+		$result = DB::query("DELETE FROM remote WHERE remote_pp = $id");
+
+		$this->request->redirect('list');
+	}
+
 	public function manageAction() {
 		$id = (int) $this->request->getParam('id');
 

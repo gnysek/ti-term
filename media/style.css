@@ -223,6 +223,7 @@ html ul.custom-tabs li.active a {
 	background-color: white;
 	margin: 0 auto;
 	position: relative;
+	box-sizing: border-box;
 }
 
 #slajd-modal-controls {
