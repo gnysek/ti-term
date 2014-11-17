@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>HTML5</title>
+		<title>Prezentacje</title>
 		<script src="http://code.jquery.com/jquery-1.5.2.min.js" type="text/javascript"></script>
 		<?php foreach ($this->js as $js): ?>
 			<script src="<?php echo $js ?>" type="text/javascript"></script>
