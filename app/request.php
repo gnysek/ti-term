@@ -6,7 +6,7 @@ class Request {
 	private $_controller = NULL;
 	private $_action = NULL;
 	private $_requestString = NULL;
-	private $_host = 'http://localhost/titag/';
+	private $_host = 'http://localhost/other/titag/';
 
 	public function __construct() {
 		$this->_params = array_merge($_GET, $_POST);
